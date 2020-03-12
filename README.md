@@ -1,7 +1,7 @@
 # Welcome !
 
 ## About me
-
+I am actually achieving a Master's degree in Statistics & Data Science at Sorbonne University (Paris).
 
 ## What you will find here
 **datascience.py**: Python functions for data analysis  
