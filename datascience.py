@@ -34,6 +34,11 @@ from sklearn.metrics import make_scorer, roc_auc_score
 
 
 def missing_val(df):
+    """
+    Indicates which columns of df contains missing values,
+    with count and percentage.
+    df: a Pandas dataframe
+     """
     miss = df.isnull() #null or na?
     total = miss.sum()
     perc = total*100/miss.count()
@@ -43,6 +48,10 @@ def missing_val(df):
 
 
 def nan_filling(x):
+    """
+    Fills missing values in column x naively.
+    x: a Pandas series (column of a Pandas dataframe)
+    """
     if x.dtype == int:
         return x.fillna(x.mode().values[0])
     elif x.dtype == float:
@@ -50,11 +59,17 @@ def nan_filling(x):
     elif x.dtype == object:
         return x.fillna('__NC__')
 
+
 def rmse(targets, predictions):
+    """Calculates RMSE between predicitions and ground truth targets"""
     return np.sqrt(((predictions - targets) ** 2).mean())
 
 
-def filling_season(data): #season
+def filling_season(data):
+    """
+    Adds a 'season' feature based on a 'month' feature to data.
+    data: a Pandas dataframe
+    """
     data.loc[data.month.isin([1, 2, 3]), 'season'] = 'winter'
     data.loc[data.month.isin([4, 5, 6]), 'season'] = 'spring'
     data.loc[data.month.isin([7, 8, 9]), 'season'] = 'summer'
@@ -84,6 +99,7 @@ def train_test_base(X_tr, X_va, y_tr, y_va, models, metric, chrono=True):
     if chrono: df.loc['Training time'] = times
 
     return df
+
 
 def train_test_random(X, y, models, metric, seed=None, test_size=0.2, chrono=True):
     """
@@ -132,7 +148,7 @@ def train_test_cv(X, y, models, metric, cv=3, chrono=True):
     """	
     df = pd.DataFrame(columns=list(models.keys()))
 
-    scores = []
+    means, stds = [], []
     times = []
 
     if type(metric) is str: scorer = metric
@@ -149,20 +165,22 @@ def train_test_cv(X, y, models, metric, cv=3, chrono=True):
             cv_score = cross_val_score(model, X, y, 
             	scoring=scorer, cv=cv, n_jobs=-1)
 
-        scores.append(np.mean(cv_score))
+        means.append(np.mean(cv_score))
+        stds.append(np.std(cv_score))
         df[name] = cv_score
 
-    df.loc['Mean score'] = scores
+    df.loc['Mean score'] = means
+    df.loc['Std'] = stds
     if chrono: df.loc['Training time'] = times
 
     return df
 
 
-
 def plot_confusion_matrix(y_pred, y, classes=None, normalize=False):
     """
-    This function prints and plots the confusion matrix.
+    This function prints and plots the confusion matrix (only for classification!)
     Normalization can be applied by setting `normalize=True`.
+    y_pred, y: Numpy arrays of Pandas series, resp. predictions and ground truth labels
     """
     title='Confusion matrix'
     cmap=plt.cm.Blues
