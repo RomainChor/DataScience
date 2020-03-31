@@ -16,6 +16,7 @@ Functions:
     train_test_base
     train_test_random
     train_test_cv
+    blending_cv
     plot_confusion_matrix
 """
 
@@ -174,6 +175,33 @@ def train_test_cv(X, y, models, metric, cv=3, chrono=True):
     if chrono: df.loc['Training time'] = times
 
     return df
+
+
+def blending_cv(models, X, y, cv=5):
+    """
+    Performs cross-validated models blending and returns scores on each fold.
+    models: dict with model name as key and Sklearn model instance as value
+    X: pandas Dataframe
+    y: numpy array
+    cv: number of folds
+    """
+    kf = KFold(n_splits=cv)
+    scores = []
+    i = 0
+    for train_index, val_index in kf.split(X):
+        X_tr, X_val = X.iloc[train_index, :], X.iloc[val_index, :]
+        y_tr, y_val = y[train_index], y[val_index]
+        y_pred = 0
+        for __, model in models.items():
+            model.fit(X_tr, y_tr)
+            y_pred += model.predict_proba(X_val)[:, 1]
+        y_pred /= cv
+        scores.append(roc_auc_score(y_val, y_pred))
+        i += 1
+    scores.append(np.mean(scores))
+    scores = pd.DataFrame(scores, columns=['Score']).rename(index={5:'Mean score'})
+    
+    return scores
 
 
 def plot_confusion_matrix(y_pred, y, classes=None, normalize=False):
