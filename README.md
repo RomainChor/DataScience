@@ -3,6 +3,7 @@
 ## About me
 I am actually achieving a Master's degree in Statistics & Data Science at Sorbonne University (Paris).  
 I am particularly interested in applications of Machine learning for AI in various fields.
+You can know more about me here: [...](https://www.linkedin.com/in/romain-chor/)
 
 ## What you will find here
 You will find some work produced during my degree and helpers I actually use.  
