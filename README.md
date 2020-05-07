@@ -10,4 +10,6 @@ You will find some work produced during my degree and helpers I actually use.
 
 **datascience.py**: (helper) Python functions for data analysis  
 It is not "perfect" and is under continuous modifications.  
-Please feel free to give your opinion so I can improve it :)
+Please feel free to give your opinion so I can improve it :)  
+
+**OCO_V1.pdf**: A work around Pegasos and online convex optimization algorithms. Theoretical results and simulations on the famous MNIST handwritten digits dataset.
