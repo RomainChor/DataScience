@@ -86,7 +86,7 @@ def train_test_base(X_tr, X_va, y_tr, y_va, models, metric, chrono=True):
     -models: dict of models to train and test
     with keys = names to display and values = sklearn object
     -metric: sklearn score function with the shape score(y_true, y_pred)
-    -chrono: whether to time fit duration or not
+    -chrono: whether to time fit duration or not, bool
     """
     df = pd.DataFrame(columns=list(models.keys()))
 
@@ -119,7 +119,7 @@ def train_test_random(X, y, models, metric, seed=None, test_size=0.2, chrono=Tru
     -models: dict of models to train and test
     with keys = names to display and values = sklearn object
     -metric: score function with the shape score(y_true, y_pred)
-    -chrono: whether to time fit duration or not
+    -chrono: whether to time fit duration or not, bool
     """
     X_tr, X_va, y_tr, y_va = train_test_split(X, y, test_size=test_size, random_state=seed)
     df = pd.DataFrame(columns=list(models.keys()))
@@ -155,7 +155,7 @@ def train_test_cv(X, y, models, metric, cv=3, chrono=True):
     -metric: str respecting sklearn metrics names (Cf. doc) (recommended)
 	or sklearn score function with the shape score(y_true, y_pred)
     -cv: Cf. sklearn cross_val_score
-    -chrono: whether to time fit duration or not
+    -chrono: whether to time fit duration or not, bool
     """
     warnings.warn("Be careful if you give a score function for the 'metric' parameter as cross_val_score from sklearn gives sometimes weird results...")
     warnings.warn("To avoid give a str name. Ex: metric='roc_auc'")
