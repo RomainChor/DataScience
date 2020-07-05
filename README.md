@@ -13,3 +13,5 @@ It is not "perfect" and is under continuous modifications.
 Please feel free to give your opinion so I can improve it :)  
 
 **Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results, implemetation and simulations on the famous MNIST handwritten digits dataset.
+
+**Drugs_consumption folder**: A work, in association with Mohamed Ruine, on a drugs consumption dataset from UCI Machine learning repository. A proper study, with exploration and inference on the dataset, followed by a classification problem. Various methods used, from boosting to Neural Networks, and advanced aggregation models like stacking.  
