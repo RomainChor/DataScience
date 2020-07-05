@@ -12,4 +12,4 @@ You will find some work produced during my degree and helpers I actually use.
 It is not "perfect" and is under continuous modifications.  
 Please feel free to give your opinion so I can improve it :)  
 
-**Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results and simulations on the famous MNIST handwritten digits dataset.
+**Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results, implemetation and simulations on the famous MNIST handwritten digits dataset.
