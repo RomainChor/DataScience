@@ -18,6 +18,7 @@ Functions:
     train_test_cv
     blending_cv (UNDER DEVELOPMENT)
     plot_confusion_matrix
+	display_side_by_side
 """
 
 print(__doc__)
@@ -27,6 +28,7 @@ import numpy as np, pandas as pd, matplotlib.pyplot as plt, seaborn as sns
 import itertools
 import time
 from sklearn.metrics import confusion_matrix
+from IPython.display import display_html
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -254,3 +256,15 @@ def plot_confusion_matrix(y_pred, y, classes=None, normalize=False):
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.grid()
+
+
+
+def display_side_by_side(args):
+    """
+	Displays Pandas DataFrames in args side by side.
+    args: list/tuple of Pandas df
+    """
+    html_str = ''
+    for df in args:
+        html_str += df.to_html()
+    display_html(html_str.replace('table', 'table style="display:inline"'), raw=True)
