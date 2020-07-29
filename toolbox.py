@@ -1,12 +1,13 @@
 """
-Machine learning helper module
+Machine learning helper toolbox
 Author: Romain Chor
 
-Packages:
-numpy as np
-pandas as pd
-matplotlib.pyplot as plt
-seaborn as sns
+Libraries:
+numpy
+pandas
+matplotlib.pyplot
+seaborn
+sklearn.model_selection, sklearn.metrics
 
 Functions:
 missing_val
@@ -16,32 +17,34 @@ filling_season
 train_test_base
 train_test_random
 train_test_cv
-blending_cv (UNDER DEVELOPMENT)
 plot_confusion_matrix
 display_side_by_side
+
+Classes:
+Blender
 """
 
 print(__doc__)
 
 #------------------------------------------------------------------------
-import numpy as np, pandas as pd, matplotlib.pyplot as plt, seaborn as sns
+import os, json
 import itertools
 import time
-from sklearn.metrics import confusion_matrix
 from IPython.display import display_html
 import warnings
 warnings.filterwarnings("ignore")
 
+import numpy as np, pandas as pd, matplotlib.pyplot as plt, seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
-from sklearn.metrics import make_scorer, roc_auc_score, log_loss, average_precision_score
+from sklearn.metrics import confusion_matrix, make_scorer, roc_auc_score, log_loss, average_precision_score
 #------------------------------------------------------------------------
 
 
 def missing_val(df):
 	"""
-	Indicates which columns of df contain missing values,
-	with count and percentage.
-	df: a Pandas dataframe
+	Indicates which columns of df contain missing values, with count and percentage.
+
+	df: Pandas DataFrame
 	"""
 	miss = df.isnull() #null or na?
 	total = miss.sum()
@@ -54,6 +57,7 @@ def missing_val(df):
 def nan_filling(x):
 	"""
 	Fills missing values in column x naively.
+
 	x: a Pandas series (column of a Pandas dataframe)
 	"""
 	if x.dtype == int:
@@ -62,6 +66,7 @@ def nan_filling(x):
 	    return x.fillna(x.median())
 	elif x.dtype == object:
 	    return x.fillna('__NC__')
+	return None
 
 
 def rmse(targets, predictions):
@@ -72,7 +77,8 @@ def rmse(targets, predictions):
 def filling_season(data):
 	"""
 	Adds a 'season' feature based on a 'month' feature to data.
-	data: a Pandas dataframe
+
+	data: a Pandas DataFrame
 	"""
 	data.loc[data.month.isin([1, 2, 3]), 'season'] = 'winter'
 	data.loc[data.month.isin([4, 5, 6]), 'season'] = 'spring'
@@ -83,12 +89,13 @@ def filling_season(data):
 
 def train_test_base(X_tr, X_va, y_tr, y_va, models, metric, chrono=True):
 	"""
-	Train and test given models, train and validation/test sets
-	-X_tr, X_va, y_tr, y_va : training (resp. validation/test) dataset and labels
-	-models: dict of models to train and test
-	with keys = names to display and values = sklearn object
-	-metric: sklearn score function with the shape score(y_true, y_pred)
-	-chrono: whether to time fit duration or not, bool
+	Train and test given models, train and validation/test sets.
+
+	X_tr, X_va: training (resp. validation/test) features, Pandas DataFrames or Numpy arrays
+	y_tr, y_va: trainig (resp. validation/test) targets, Numpy arrays
+	models: dict with models names as keys and sklearn object as values
+	metric: sklearn score function with the shape score(y_true, y_pred)
+	chrono: whether to time fit duration or not, bool (default True)
 	"""
 	df = pd.DataFrame(columns=list(models.keys()))
 
@@ -115,13 +122,13 @@ def train_test_base(X_tr, X_va, y_tr, y_va, models, metric, chrono=True):
 
 def train_test_random(X, y, models, metric, seed=None, test_size=0.2, chrono=True):
 	"""
-	Train and test given models: splits datasets then for each model,
-	times fit duration and calculates a score with a random validation set.
-	-X, y: training dataset and labels
-	-models: dict of models to train and test
-	with keys = names to display and values = sklearn object
-	-metric: score function with the shape score(y_true, y_pred)
-	-chrono: whether to time fit duration or not, bool
+	Train and test given models: splits datasets using train_test_split then for each model, times fit duration and evaluates on a validation set.
+
+	X: training features, Pandas DataFrame or Numpy array
+	y: training target, Numpy array
+	models: dict with models names as keys and sklearn object as values
+	metric: score function with the shape score(y_true, y_pred)
+	chrono: whether to time fit duration or not, bool (default True)
 	"""
 	X_tr, X_va, y_tr, y_va = train_test_split(X, y, test_size=test_size, random_state=seed)
 	df = pd.DataFrame(columns=list(models.keys()))
@@ -149,15 +156,14 @@ def train_test_random(X, y, models, metric, seed=None, test_size=0.2, chrono=Tru
 
 def train_test_cv(X, y, models, metric, cv=3, chrono=True):
 	"""
-	Train and test given models using cross-validation: times fit duration and
-	computes mean cross validation score for each model.
-	-X, y: training dataset and labels
-	-models: dict of models to train and test
-	with keys = names to display and values = sklearn object
-	-metric: str respecting sklearn metrics names (Cf. doc) (recommended)
-	or sklearn score function with the shape score(y_true, y_pred)
-	-cv: Cf. sklearn cross_val_score
-	-chrono: whether to time fit duration or not, bool
+	Train and test given models using cross-validation: times fit duration and computes cross validation scores for each model.
+
+	X: training features, Pandas DataFrame or Numpy array
+	y: training target, Numpy array
+	models: dict with models names as keys and sklearn object as values
+	metric: str respecting sklearn metrics names (Cf. doc) (recommended) or sklearn metric function with the shape metric(y_true, y_pred)
+	cv: Cf. sklearn cross_val_score
+	chrono: whether to time fit duration or not, bool (default True)
 	"""
 	warnings.warn("Be careful if you give a score function for the 'metric' parameter as cross_val_score from sklearn gives sometimes weird results...")
 	warnings.warn("To avoid that give a str name. Ex: metric='roc_auc'")
@@ -190,15 +196,29 @@ def train_test_cv(X, y, models, metric, cv=3, chrono=True):
 
 
 class Blender():
+	"""
+	Class for blending aggregation method.
+	"""
 	def __init__(self, models, metric):
+		"""
+		models: dict with name of model as key and object instance with fit method
+		metric: metric function with the shape metric(y_true, y_pred)
+		"""
 		self.models = models
 		self.metric = metric
 
 	def fit(self, X, y):
-	    for name, __ in self.models.items():
-	        self.models[name].fit(X, y)
+		"""
+		X: training features, Pandas DataFrame or Numpy array
+		y: training target, Numpy array
+		"""
+		for name, __ in self.models.items():
+		    self.models[name].fit(X, y)
 
 	def predict(self, X):
+		"""
+		X: test features, to predict associated targets, Pandas DataFrame or Numpy array
+		"""
 		y_pred = 0
 		for __, model in self.models.items():
 			if self.metric in [roc_auc_score, log_loss, average_precision_score]:
@@ -209,10 +229,20 @@ class Blender():
 		return y_pred
 
 	def score(self, X, y):
+		"""
+		X: test features, to predict associated targets, Pandas DataFrame or Numpy array
+		y: ground truth test target, Numpy array
+		"""
 		y_pred = self.predict(X)
 		return self.metric(y, y_pred)
 
 	def cv_score(self, X, y, cv=3):
+		"""
+		Performs K-folds cross validation and return cross validation scores.
+		X: training features, Pandas DataFrame or Numpy array
+		y: training target, Numpy array
+		cv: number of splits for K-folds, int (default 3)
+		"""
 		kf = KFold(n_splits=cv)
 		scores = pd.DataFrame(columns=['Score'])
 		i = 0
@@ -272,7 +302,10 @@ def plot_confusion_matrix(y_pred, y, classes=None, normalize=False):
 	"""
 	Plots the confusion matrix (only for classification!)
 	Normalization can be applied by setting `normalize=True`.
-	y_pred, y: Numpy arrays of Pandas series, resp. predictions and ground truth labels
+
+	y_pred, y: predictions and ground truth labels, Numpy arrays or Pandas series
+	classes: classes for classification, list or Numpy array (default None)
+	normalize: whether to normalize counts or not (default False)
 	"""
 	title='Confusion matrix'
 	cmap=plt.cm.Blues
@@ -308,13 +341,43 @@ def plot_confusion_matrix(y_pred, y, classes=None, normalize=False):
 	plt.grid()
 
 
-
 def display_side_by_side(args):
 	"""
-	Displays Pandas DataFrames in args side by side.
-	args: list/tuple of Pandas df
+	Displays Pandas DataFrames side by side (for Jupyter Notebook env).
+
+	args: list/tuple of Pandas DataFrames
 	"""
 	html_str = ''
 	for df in args:
 	    html_str += df.to_html()
 	display_html(html_str.replace('table', 'table style="display:inline"'), raw=True)
+
+
+def extract_json(base_dir, NB=500, verbose=True):
+    """
+    Extracts the NB first json files from base_dir to a list of dictionnaries.
+
+	base_dir: directory containing files to extract, str
+	NB: number of files to extract (default 500), int
+    verbose: whether to print informations on extraction or not.
+    """
+
+    #Get all files in the directory
+    i = 0
+    data_list = []
+    start = time.time()
+    for file in os.listdir(base_dir):
+        #If file is a json, construct it's full path and open it, append all json data to list
+        if 'json' in file and i < NB:
+            json_path = os.path.join(base_dir, file)
+            with open(json_path, 'r') as f:
+                json_data = json.load(f)
+            data_list.append(json_data)
+            i += 1
+    end = time.time()
+
+    if verbose:
+        print("Nb of files extracted: ", len(data_list))
+        print("Extraction time: {0:.2f}s".format(end-start))
+
+    return data_list
