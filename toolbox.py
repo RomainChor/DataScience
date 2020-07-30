@@ -19,6 +19,7 @@ train_test_random
 train_test_cv
 plot_confusion_matrix
 display_side_by_side
+extract_json
 
 Classes:
 Blender
@@ -361,7 +362,6 @@ def extract_json(base_dir, NB=500, verbose=True):
 	NB: number of files to extract (default 500), int
     verbose: whether to print informations on extraction or not.
     """
-
     #Get all files in the directory
     i = 0
     data_list = []
