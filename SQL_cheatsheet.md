@@ -1,43 +1,42 @@
 # Cheatsheet SQL
 
-Taken from example based on *Panama Papers* database.  
-Contains 4 tables:  
-- *entity*
-- *intermediary*
-- *address*
-- *officer*
+**Notice:** syntax may change depending on SQL version and on SQL interpretor. Get official cheatsheets for up-to-date syntax.  
+https://www.sqltutorial.org/sql-cheat-sheet/
 
-Import all columns (*) from a *entity* table: ```SELECT * FROM entity ;```   
-Import and drop all duplicates: ```SELECT DISTINCT...```
+
+## Basic operations
+
+Import all columns from a table *t1*: `SELECT * FROM t1 ;`   
+Import and drop all duplicates: `SELECT DISTINCT...`
 **Projection**:
-- select id, name and status columns: ```SELECT id, name, status FROM entity ;```
-- apply (arithmetic) operations: ```SELECT  id * 2, name, status  FROM  entity ;```
+- select *c1, c2* and *c3* columns: `SELECT c1, c2, c3 FROM t1;`
+- apply (arithmetic) operations: `SELECT  c1 * 2, ABS(c2), c3  FROM  t1;`
 
-**Restriction**, select rows with name columns as "Big Data Crunchers Ltd": ```SELECT * FROM entity WHERE name = 'Big Data Crunchers Ltd.' ;```  
+**Restriction**, select rows verifying *condition* `SELECT * FROM t1 WHERE condition ;`  
 
-Condition operators: see https://www.w3schools.com/sql/sql_operators.asp  
-**Cartesian product**: ```SELECT * FROM entity, address ;``` (automatically performs cartesian product between *entity* and *address*  
-**Aliases**, rename columns: ```SELECT id AS identifiant, name, status  FROM  entity ;```  
+Operators: see https://www.w3schools.com/sql/sql_operators.asp  
+**Cartesian product**: `SELECT * FROM t1, t2;` (automatically performs cartesian product between *t1* and *t2*  
+**Aliases**, rename column *c1* as *alias*: `SELECT c1 AS alias FROM t1 ;`  
 **Union, difference, intersection**:  
 ```sql
-SELECT name, id_address FROM entity
+SELECT c1, c2 FROM t1
 OPERATION
-SELECT name, id_address FROM intermediary ;
+SELECT c3, c4 FROM t2;
 ```
 (replace OPERATION with UNION, EXCEPT or INTERSECT)  
 **CAUTION:** EXCEPT and INTERCEPT keywords are not tolerated by some SQL interpretors like MySQL.  
 
-**Joins**:
-- Inner join:
 
-```
+## Joins
+- Inner join:
+```sql
 SELECT * 
-FROM  entity, address  
-	WHERE  entity.id_address  =  address.id_address ;
+FROM  t1, t2
+	WHERE  t1.c1 =  t2.c2;
 ```  
 or  
-```
+```sql
 SELECT * 
-FROM entity
-	JOIN address ON entity.id_address = address.id_address ;
+FROM t1
+	JOIN t2 ON t1.c1= t2.c2;
 ```
