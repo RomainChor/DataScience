@@ -19,7 +19,7 @@ Condition operators: see https://www.w3schools.com/sql/sql_operators.asp
 **Cartesian product**: ```SELECT * FROM entity, address ;``` (automatically performs cartesian product between *entity* and *address*  
 **Aliases**, rename columns: ```SELECT id AS identifiant, name, status  FROM  entity ;```  
 **Union, difference, intersection**:  
-```python
+```sql
 SELECT name, id_address FROM entity
 OPERATION
 SELECT name, id_address FROM intermediary ;
