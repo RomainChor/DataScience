@@ -18,6 +18,7 @@ Import and drop all duplicates: `SELECT DISTINCT...`
 
 **Restriction (rows filtering)**, select rows verifying *condition*: `SELECT * FROM t1 WHERE condition;`  
 See https://www.w3schools.com/sql/sql_operators.asp  for operators  
+
 **Cartesian product**: `SELECT * FROM t1, t2;` (automatically performs cartesian product between *t1* and *t2*  
 **Union, difference, intersection**:  
 ```sql
@@ -70,15 +71,18 @@ Most aggregation functions take one argument, except *count(\*)*.
 
 ## Other useful query functions
 
-- **ORDER BY**: sort *t1* based on *c2* values in ascendind/descending order  
+### ORDER BY 
+Sort *t1* based on *c2* values in ascendind/descending order  
 ```sql
 SELECT * 
 FROM t1 
 ORDER BY c2 [ASC/DESC];
 ``` 
 
-- **HAVING**: allows to perform restriction AFTER aggregation.  
-Filter aggregates based on *condition* after applying function *aggregate*. Note: *condition* can be an aggregation function!
+### HAVING 
+Allows to perform restriction AFTER aggregation.  
+Filter aggregates based on *condition* after applying function *aggregate*.  
+Note: *condition* can be an aggregation function!
 ```sql
 SELECT c1, aggregate(c2)
 FROM t1
@@ -86,9 +90,16 @@ GROUP BY c1
 HAVING condition
 ```
 
-- **LIKE**: allows filtering based on strings. 
+### LIKE 
+Allows filtering based on strings. 
 ```sql
 SELECT * 
 FROM t1
 WHERE name LIKE 'A%';
 ```
+'A%' is the **pattern**. *name* is a column containing strings, used for filtering.
+- "%" character replaces **0, 1 or more** unknown characters
+- "_" character **one** unknown character
+
+Note: some SQL interpretors are case sensitive hence it is recommended to do apply the function *lower()* to *name*.
+ 
