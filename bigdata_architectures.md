@@ -42,6 +42,9 @@ The **speed** layer shows real-time views of received data to clients.
 - The speed layer handles real-time/streaming data hence required an adapted solution. This solution must feature:
 	- Random writing
 	- Random reading
-- As mentioned above, data are refreshed after each job from the batch layer. Refreshing is tough to handle, especially if data are aggregated in the speed layer
 
 ![speed](https://user.oc-static.com/upload/2017/12/17/15135412365166_speed-timeline.jpeg)
+
+- As mentioned above, data are refreshed after each job from the batch layer. Refreshing is tough to handle, especially if data are aggregated in the speed layer. One solution is to use 2 parallel views: a **current** view and a **future** view. Users make requests on the current view and the future view becomes the current view whenever data from current view are deleted. 
+
+![refresh](https://user.oc-static.com/upload/2017/12/17/15135412620601_data-expiry.jpeg)
