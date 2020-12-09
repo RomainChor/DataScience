@@ -29,7 +29,8 @@ Un attribut A **dépend** d'un groupe d'attributs G si en ne connaissant que G e
 
 ### Redondance
 Désigne la répétition d'une même info à plusieurs endroits d'une relation. Une solution à cela est de diviser la relation en plusieurs relations.  
-Règle: si A **dépend uniquement** de G (et que G n'est pas une clé candidate), alors on peut créer une relation contenant A et G. Il faut que G soit **minimal** i.e. enlever un attribut de G ne casse pas la dépendance entre A et G
+Règle: si A **dépend uniquement** de G (et que G n'est pas une clé candidate), alors on peut créer une relation contenant A et G. Il faut que G soit **minimal** i.e. enlever un attribut de G ne casse pas la dépendance entre A et G.  
+Le fait de supprimer les redondances s'appelle la **normalisation**.
 
 ### Cardinalité
 Désigne les associations possibles entre les tuples de plusieurs relations.
