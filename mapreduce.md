@@ -1,4 +1,5 @@
 # About distributed processing & MapReduce 
+(figures source: OpenClassrooms)
 
 ## Distributed processing
 
@@ -20,6 +21,7 @@ Steps 2, 3 and 4 can be distributed.
 
 ![mapreduce](https://user.oc-static.com/upload/2017/03/21/14900935617221_Diapositive07.jpeg)
 
+Note that transforming any problem to a MapReduce algorithm is sometimes tough and not always possible.
 
 ## A first Big Data framework: Hadoop
 
@@ -41,7 +43,7 @@ In HDFS:
 - The name node keeps track of chunks localization in data nodes
 
 
-### Hadoop MapReduce
+### Hadoop MapReduce (in Hadoop 1.0)
 Hadoop MapReduce also works with a master-slave relation:
 - Master: a **job tracker** handling processing orders and system's resources distribution. It receives MapReduce tasks from a client (a .jar file), the input data and the directory where output data should be stored.  
 It communicates with the HDFS name node. The job tracker distributes tasks to **task trackers**.  
@@ -55,3 +57,33 @@ The exact processing scheme on Hadoop MapReduce is as follows:
 4. The **job tracker** determines which task trackers nodes are available/relevant to execute the job. It sends to each task tracker the task to perform (MAP, REDUCE, SHUFFLE, ...)  (in a .jar) on its own data chunk.
 5. Task trackers regularly send messages (*heartbeats*) to the job tracker about their tasks completion and their free slots number.
 6. When all planned tasks are completed and confirmed, the job is considered to be done.
+
+![hadoop_mapreduce](https://user.oc-static.com/upload/2017/03/21/14900952407238_Diapositive5Hadoop.jpeg)
+
+To use Hadoop, it suffices to :
+- Write MAP & REDUCE programs and build a `.jar` file.
+- Submit input files, output directory and `.jar` file to the job tracker.
+
+### Hadoop 2.0 and YARN
+As told previously, handling any problem with the MapReduce paradigm is not always possible or very costful. Moreover, in Hadoop MapReduce framework, the job tracker must both handle resources and assign tasks. If this tracker defects, how should we do?  
+
+In Hadoop 2.0, YARN (Yet Another Ressource Negociator) has been integrated. This  framework allows execution of any distributed program on a Hadoop cluster, not only MapReduce programs.  
+YARN separates resources management and tasks assignment and allows other applications to manage resources :
+- **Resource manager**: drives the cluster using **node managers**.
+- **Application master (AM)**: process executed on all slave machines, handling with help of the resource manager all resources required for the job.
+
+![yarn](https://user.oc-static.com/upload/2017/03/21/14900953273661_Hadoop_withYarn.png)
+
+In YARN, each task tracker is replaced by:
+- **Containers** which are resources abstractions on nodes dedicated either to task execution (MAP, REDUCE) or to an application master execution.
+-  A **node manager** hosting  **containers** and managing resources of the node. Communicates with the resource manager via *heartbeats*.
+
+The new processing scheme with YARN is:
+1. A Hadoop client copies its data on the HDFS.
+2. The client submits a job to the **resource manager** (in a .jar) and names of input & output files.
+3. The resource manager allocates a container for the application master on a node manager.
+4. The application master requests one or more containers to the resource manager  un ou plusieurs containers avec des préférences de localisation dépendant de la localité des données d'entrée du travail.
+5. The resource manager allocated one of more containers (childs) for the application master.
+6.  L'**application master**  choisit parmi la liste des tâches (par exemple Map et Reduce) et demarre une instance de la tâche choisie dans un des  **containers**  qui lui a été alloué. Il collabore alors avec le  **node manager**  pour utiliser les ressources acquises. Il communique aussi souvent avec le  **resource manager**  (message  _heartbeat_) pour la tolérance aux pannes.
+
+![hadoop2_yarn](https://user.oc-static.com/upload/2017/03/21/149009546737_DiapositiveHadoopYarn.jpeg)
