@@ -69,7 +69,7 @@ As told previously, handling any problem with the MapReduce paradigm is not alwa
 
 In Hadoop 2.0, YARN (Yet Another Ressource Negociator) has been integrated. This  framework allows execution of any distributed program on a Hadoop cluster, not only MapReduce programs.  
 YARN separates resources management and tasks assignment and allows other applications to manage resources :
-- **Resource manager**: drives the cluster using **node managers**.
+- **Resource manager (RM)**: drives the cluster using **node managers**.
 - **Application master (AM)**: process executed on all slave machines, handling with help of the resource manager all resources required for the job.
 
 ![yarn](https://user.oc-static.com/upload/2017/03/21/14900953273661_Hadoop_withYarn.png)
@@ -80,10 +80,17 @@ In YARN, each task tracker is replaced by:
 
 The new processing scheme with YARN is:
 1. A Hadoop client copies its data on the HDFS.
-2. The client submits a job to the **resource manager** (in a .jar) and names of input & output files.
-3. The resource manager allocates a container for the application master on a node manager.
-4. The application master requests one or more containers to the resource manager  un ou plusieurs containers avec des préférences de localisation dépendant de la localité des données d'entrée du travail.
-5. The resource manager allocated one of more containers (childs) for the application master.
-6.  L'**application master**  choisit parmi la liste des tâches (par exemple Map et Reduce) et demarre une instance de la tâche choisie dans un des  **containers**  qui lui a été alloué. Il collabore alors avec le  **node manager**  pour utiliser les ressources acquises. Il communique aussi souvent avec le  **resource manager**  (message  _heartbeat_) pour la tolérance aux pannes.
+2. The client submits a job to the resource manager (RM) (in a .jar) and names of input & output files.
+3. The RM allocates a container for the application master on a node manager.
+4. The application master (AM) requests one or more containers to the RM
+5. The RM allocates one of more containers (*childs*) for the AM.
+6. The AM starts a task instance in one of the allocated containers (*childs*). It works with the node manager to use the allocated resources. It also communicates with the RM (*heartbeats*).
 
-![hadoop2_yarn](https://user.oc-static.com/upload/2017/03/21/149009546737_DiapositiveHadoopYarn.jpeg)
+![hadoop2_yarn](https://user.oc-static.com/upload/2017/03/21/14900954970947_DiapositiveYarnSchemaExecution.jpeg)
+
+With this scheme, many applications can be runned and not only MapReduce programs.
+
+![apps](https://user.oc-static.com/upload/2017/03/21/1490095525726_Yarnapplications.jpeg)
+
+
+### Hadoop Streaming
