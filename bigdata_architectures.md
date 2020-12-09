@@ -9,6 +9,7 @@ Handling Big Data relies on a concept known as **Lambda architecture**. It guara
 - Easy data access
 
 The Lambda architecture is composed of 3 layers: "batch layer",  "speed layer" and "serving layer".
+
 ![lambda](https://user.oc-static.com/upload/2017/12/14/15132725019668_lambda.jpeg)
 
 Received data are collected in their raw format in the **Master dataset** contained in the **batch** layer. Then these data are aggregated in **batches** and showed to clients as a view in the **serving** layer. Aggregation takes time hence received data can be accessed by clients in real time in the **speed** layer.
@@ -21,6 +22,7 @@ The **batch** layer handles massive data storage (in the **Master dataset**) and
 - The Master dataset is contained in a **data lake** which must respect the Lambda architecture's conditions.  
 - Data are stored in a **normalized** form (avoid duplicates like in SQL)
 - Computation is handled by **MapReduce** solutions (Hadoop/Spark)
+- The batch layer uses **distributed file system** for data storage (DFS)
 
 ## Serving layer
 
@@ -32,5 +34,14 @@ A **noSQL** database is the most convenient solution for the serving layer.
 
 
 ## Speed layer
+
+The **speed** layer shows real-time views of received data to clients. 
+- Showed data will be deleted from the speed layer whenever they are not required anymore.
+- Data can be stored in an unnormalized format in the speed layer
+- Data are not necessarily stored in their raw format, they can be aggregated (which is way more convenient for performance)
+- The speed layer handles real-time/streaming data hence required an adapted solution. This solution must feature:
+	- Random writing
+	- Random reading
+- As mentioned above, data are refreshed after each job from the batch layer. Refreshing is tough to handle, especially if data are aggregated in the speed layer. 
 
 ![speed](https://user.oc-static.com/upload/2017/12/17/15135412365166_speed-timeline.jpeg)
