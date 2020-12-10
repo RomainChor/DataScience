@@ -4,7 +4,7 @@
 ## Distributed processing
 
 - Parallel processing: multiple workers/threads computing at the same time and sharing a common memory. Often cores of a same processor. Features synchronous processing.
-- Distributed processing: workers (also called **nodes**) are distant, autonomous and do not share resources. Communication between nodes in a same **cluster** is done with messages. Allows vertical scaling by adding new nodes to a cluster to increase computational performance. Also less sensitive to failures: if a node encounters a defect, its task can be reassigned to another node.
+- Distributed processing: workers (also called **nodes**) are distant, autonomous and do not share resources. Communication between nodes in a same **cluster** is done with messages. Allows horizontal scaling by adding new nodes to a cluster to increase computational performance. Also less sensitive to failures: if a node encounters a defect, its task can be reassigned to another node.
 
 ## MapReduce paradigm
 
