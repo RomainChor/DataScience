@@ -3,27 +3,26 @@ Machine learning helper toolbox
 Author: Romain Chor
 
 Libraries:
-	numpy
-	pandas
-	matplotlib.pyplot
-	seaborn
-	sklearn.model_selection, sklearn.metrics
+numpy
+pandas
+matplotlib.pyplot
+seaborn
+sklearn.model_selection, sklearn.metrics
 
 Functions:
-	missing_val
-	nan_filling
-	rmse
-	mape
-	filling_season
-	train_test_base
-	train_test_random
-	train_test_cv
-	plot_confusion_matrix
-	display_side_by_side
-	extract_json
+missing_val
+nan_filling
+rmse
+filling_season
+train_test_base
+train_test_random
+train_test_cv
+plot_confusion_matrix
+display_side_by_side
+extract_json
 
 Classes:
-	Blender
+Blender
 """
 
 print(__doc__)
@@ -74,11 +73,6 @@ def nan_filling(x):
 def rmse(targets, predictions):
 	"""Calculates RMSE between predicitions and ground truth targets"""
 	return np.sqrt(np.mean((predictions - targets) ** 2))
-
-
-def mape(targets, predictions):
-	"""Calculates MAPE between predicitions and ground truth targets"""
-	return np.mean(np.abs((predictions - targets)/targets))*100
 
 
 def filling_season(data):
@@ -232,7 +226,6 @@ class Blender():
 			    y_pred += model.predict_proba(X)[:, 1]
 			else:
 				y_pred += model.predict(X)
-		y_pred /= len(self.models)
 
 		return y_pred
 
@@ -369,6 +362,7 @@ def extract_json(base_dir, NB=500, verbose=True):
 	NB: number of files to extract (default 500), int
     verbose: whether to print informations on extraction or not.
     """
+
     #Get all files in the directory
     i = 0
     data_list = []
