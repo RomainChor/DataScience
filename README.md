@@ -1,7 +1,7 @@
 # Welcome !
 
 ## About me
-I am actually achieving a Master's degree in Statistics & Data Science at Sorbonne University (Paris).  
+I recently graduated from a Master's degree in Statistics & Data Science at Sorbonne University (Paris).  
 I am particularly interested in applications of Machine learning for AI in various fields.  
 You can know more about me here: [LinkedIn](https://www.linkedin.com/in/romain-chor/)
 
@@ -14,4 +14,4 @@ Please feel free to give your opinion so I can improve it :)
 
 **Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results, implemetation and simulations on the famous MNIST handwritten digits dataset.
 
-**Drugs_consumption folder**: A work, in association with Mohamed Ruine, on a drugs consumption dataset from UCI Machine learning repository. A proper study, with exploration and inference on the dataset, followed by a classification problem. Various methods used, from boosting to Neural Networks, and advanced aggregation models like stacking.  
+**Drugs_consumption folder**: A work, in association with Mohamed Ruine, on the "Drugs consumption" dataset from UCI Machine learning repository. A proper study, with data exploration followed by a classification problem. Various methods used, from boosting to Neural Networks, and advanced aggregation models like stacking.  
