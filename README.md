@@ -8,8 +8,8 @@ You can know more about me here: [LinkedIn](https://www.linkedin.com/in/romain-c
 ## What you will find here
 You will find some work produced during my degree and helpers I actually use.  
 
-**datascience.py**: (helper) Python functions for data analysis  
-It is not "perfect" and is under continuous modifications.  
+**toolbox.py**: (helper) Python functions for data analysis and inference.    
+It is not "perfect" and under continuous modifications.  
 Please feel free to give your opinion so I can improve it :)  
 
 **Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results, implemetation and simulations on the famous MNIST handwritten digits dataset.
