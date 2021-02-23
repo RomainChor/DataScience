@@ -6,7 +6,7 @@ noSQL was designed to provide a solution to a drawback from SQL usage: **distrib
 Depending on the usage, several families of noSQL solutions exist.
 
 ### Key-values storage
-Used for simplicity and efficiency. No way of exploiting data structure and making complex requests like in SQL. Efficient for searching for specific individuals.  
+Used for simplicity and efficiency. No way of exploiting data structure and making complex requests like in SQL. Efficient for searching for specific individuals. 
 Used by: Redis, Azure CosmosDB, SimpleDB    
 Applications: fraud detection, e-shopping, chat, logs
 
@@ -38,4 +38,14 @@ ACID properties characterize relational databases while  BASE properties designa
 
 These properties are too restrictive and cannot be respected for distributed processing. BASE properties aim at relaxing these constraints.
 
-- Basically Available: 
+- Basically Available: whatever the amount of data/requests, the database has a minimal availability rate
+- Soft-state: the database can change during updates or when adding/removing servers. Its state does not have to be consistent at any time
+- Eventually consistent: the database is guaranteed to eventually be consistent
+
+### CAP theorem (Brewer)
+The CAP theorem relies on 3 properties to characterize databases (relational, noSQL):
+- **Consistency**
+- **Availability**
+- **Partition tolerance**: convenience for distributed processing
+
+The theorem states that for any database, only **2 ** CAP properties **at most** can be respected at the same time. 
