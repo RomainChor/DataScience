@@ -1,4 +1,7 @@
+
 # noSQL
+
+Figures source: OpenClassrooms
 
 noSQL was designed to provide a solution to a drawback from SQL usage: **distributed processing**. noSQL features a different way of making queries and handles data storage as well. 
 
@@ -31,10 +34,10 @@ ACID properties characterize relational databases while  BASE properties designa
 
 ![](https://user.oc-static.com/upload/2017/06/07/14968372992067_ACID_BASE.png)
 
-- Atomiticy: a transaction (sequence of requests) is either complete or not done at all  
+- Atomicity: a transaction (i.e. sequence of requests) is either fully completed or not done at all  
 - Consistency: a database's content must remain consistent though out replicas (distributions) from the start until the end of a transaction  
 - Isolation: modifications made by a transaction are viewable only when the transaction is achieved  
-- Durability: once a transaction is complete, the database state is permanent (should not be affected by defects)
+- Durability: once a transaction is complete, the database state is permanent (should not be affected by defects/bugs)
 
 These properties are too restrictive and cannot be respected for distributed processing. BASE properties aim at relaxing these constraints.
 
@@ -49,3 +52,11 @@ The CAP theorem relies on 3 properties to characterize databases (relational, no
 - **Partition tolerance**: convenience for distributed processing
 
 The theorem states that for any database, only **2 ** CAP properties **at most** can be respected at the same time. 
+
+![](https://user.oc-static.com/upload/2017/06/14/14974533972322_CA_AP_CP.png)
+
+- CA: 2 READ operations on a same database return the same version of that database, without delay. Only possible with **relational** databases. Therefore not designed for distribution.
+- CP: allows distribution on multiple nodes. Consistency yields synchronization of replicas hence response time. 
+- AP: features both short response time and distributed processing. Updates on databases are asynchronous. 
+
+![](https://user.oc-static.com/upload/2017/05/26/14958217637026_triangleCAP.png)
