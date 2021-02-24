@@ -1,7 +1,13 @@
 # Cheatsheet SQL
 
 **Notice:** syntax may change depending on SQL version and on SQL interpretor. Get official cheatsheets for up-to-date syntax.  
-https://www.sqltutorial.org/sql-cheat-sheet/
+https://www.sqltutorial.org/sql-cheat-sheet/  
+
+**Legend**
+- "[]" indicate optional clauses.
+- "()" indicate literal parentheses.
+- "/" indicates a logical OR.
+- "{}" enclose a set of options.
 
 
 ## Basic operations
@@ -41,14 +47,14 @@ or
 ```sql
 SELECT * 
 FROM t1
-(INNER) JOIN t2 ON t1.c1 = t2.c2;
+[INNER] JOIN t2 ON t1.c1 = t2.c2;
 ```
 
 - Outer join:
 ```sql
 SELECT *
 FROM t1
-[LEFT/RIGHT/FULL] OUTER JOIN t2 ON t1.c1 = t2.c3;
+{LEFT/RIGHT/FULL} [OUTER] JOIN t2 ON t1.c1 = t2.c3;
 ```
 
 - Natural join:
@@ -60,11 +66,11 @@ NATURAL JOIN t2;
 
 ## Aggregation
 
-Apply aggregation function *func* to aggregates obtained grouping attribute *c1*:
+Apply aggregation function *func* to aggregates obtained with grouping attribute *c2*:
 ```sql
-SELECT c1, func 
+SELECT c1, func(..)
 FROM t1 
-GROUP BY c1;
+GROUP BY c2;
 ```
 Most aggregation functions take one argument, except *count(\*)*.
 
@@ -103,18 +109,18 @@ WHERE name LIKE 'A%';
 
 Note: some SQL interpretors are case sensitive hence it is recommended to do apply the function *lower()* to *name*.
  
-### OVER/PARTITION BY
+### OVER ... PARTITION BY
 Partition a table (or any subset of rows) and applies a **window** function to each group of the partition.
 See:
 - https://www.sqltutorial.org/sql-window-functions/  
 - https://cloud.google.com/bigquery/docs/reference/standard-sql/analytic-function-concepts  
 
 ```sql
-SELECT [...], window_function(expression) OVER (
-                                                partition_clause
-                                                order_clause
-                                                frame_clause
-                                                )
+SELECT ..., window_function(expression) OVER (
+                                              partition_clause
+                                              order_clause
+                                              frame_clause
+                                             )
 ```
 where:
 - `partition_clause` is defined by a `PARTITION BY` expression. It divides the table into a partition to which the window function is applied. If it is not specified, there is no partitioning.
@@ -122,8 +128,8 @@ where:
 - `frame_clause` is defined as follows:
 
 ```sql
-{ RANGE | ROWS } frame_start
-{ RANGE | ROWS } BETWEEN frame_start AND frame_end
+{RANGE/ROWS} frame_start
+{RANGE/ROWS} BETWEEN frame_start AND frame_end
 ```
 with: `frame_start` being one of `N PRECEDING/UNBOUNDED PRECEDING/CURRENT ROW` (N a number)
 and `frame_end` being one of `CURRENT ROW/UNBOUNDED FOLLOWING/N FOLLOWING`.  
@@ -131,3 +137,14 @@ It defines the window in each group of the partition to which the window functio
 The `ROWS` or `RANGE` specifies the type of relationship between the current row and frame rows.
 - `ROWS`: the offsets of the current row and frame rows are row numbers
 - `RANGE`: the offset of the current row and frame rows are row values
+
+### WITH ... AS
+`AS` (used for aliases), when used in association with `WITH` in what's called a **common table expression** (CTE). A CTE is a temporary table that is returned within the query.
+```sql
+WITH cte AS (
+             SELECT ...
+            )
+SELECT c1
+FROM cte
+```
+                 
