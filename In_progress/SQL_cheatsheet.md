@@ -103,3 +103,31 @@ WHERE name LIKE 'A%';
 
 Note: some SQL interpretors are case sensitive hence it is recommended to do apply the function *lower()* to *name*.
  
+### OVER/PARTITION BY
+Partition a table (or any subset of rows) and applies a **window** function to each group of the partition.
+See:
+- https://www.sqltutorial.org/sql-window-functions/  
+- https://cloud.google.com/bigquery/docs/reference/standard-sql/analytic-function-concepts  
+
+```sql
+SELECT [...], window_function(expression) OVER (
+                                                partition_clause
+                                                order_clause
+                                                frame_clause
+                                                )
+```
+where:
+- `partition_clause` is defined by a `PARTITION BY` expression. It divides the table into a partition to which the window function is applied. If it is not specified, there is no partitioning.
+- `order_clause` is defined by a `ORDER BY` expression. It is optional.
+- `frame_clause` is defined as follows:
+
+```sql
+{ RANGE | ROWS } frame_start
+{ RANGE | ROWS } BETWEEN frame_start AND frame_end
+```
+with: `frame_start` being one of `N PRECEDING/UNBOUNDED PRECEDING/CURRENT ROW` (N a number)
+and `frame_end` being one of `CURRENT ROW/UNBOUNDED FOLLOWING/N FOLLOWING`.  
+It defines the window in each group of the partition to which the window function is applied. It is optional.  
+The `ROWS` or `RANGE` specifies the type of relationship between the current row and frame rows.
+- `ROWS`: the offsets of the current row and frame rows are row numbers
+- `RANGE`: the offset of the current row and frame rows are row values
