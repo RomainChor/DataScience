@@ -60,3 +60,35 @@ The theorem states that for any database, only **2 ** CAP properties **at most**
 - AP: features both short response time and distributed processing. Updates on databases are asynchronous. 
 
 ![](https://user.oc-static.com/upload/2017/05/26/14958217637026_triangleCAP.png)
+
+### What noSQL solution to choose?
+Criteria to help choose:
+- Cost
+- Consistency/Availability (Cf. CAD theorem)
+- Query language: high level?
+- Features depending on the required application
+
+Cf. https://db-engines.com/en/ranking_trend
+
+
+## Files distribution with noSQL
+Files distribution in noSQL works with **sharding**. This consists in distributing **chunks** of data on a cluster of servers handling both **elasticity** and defects tolerance.   
+Elasticity designates the system's ability to adapt itself to the number of servers available and the amount of date to handle. It should uniformly spread data though the cluster. 
+
+### HDFS 
+Cf. [mapreduce.md](https://github.com/RomainChor/DataScience/blob/master/In_progress/mapreduce.md)
+
+HDFS gives a nice processing power as well as a robustness (thanks to all replicas).
+
+### Clustered index
+In this system, files are distributed in a tree-based network.  
+The central server (root) acts like a **router** and gives access to the node (leaf) indexing the requested data. Data is hierarchically spread through chunks within **nodes**. This enables elasticity since chunks' bounds can be easily modified on purpose. To guaranty data retrieval in case of defects, the router is replicated.
+![](https://user.oc-static.com/upload/2017/06/06/14967849840924_ShardingBTree.png)
+
+Nodes handle MapReduce operations and also chunks replication. Unlike HDFS, chunks must be replicated in the same node.  
+
+Clustered index file system allows a structured and hierarchical data distribution which facilitates distributed operations (REDUCE) and ensures consistency.  
+**MongoDB** uses this file system.
+
+### Distributed hashing tables
+![](https://user.oc-static.com/upload/2017/06/07/14968445278407_ShardingDHT.png)
