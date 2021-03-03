@@ -1,4 +1,4 @@
-# MongoDB cheatsheet
+# MongoDB queries cheatsheet
 
 MongoDB query operations are based on JavaScript language. MongoDB allows 4 types of operations, named **CRUD**:
 - **C**REATE
