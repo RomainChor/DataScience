@@ -11,8 +11,8 @@ See https://developer.mongodb.com/quickstart/cheat-sheet/ for an overview of Mon
 Given a database with a collection *collec*, all operations start with `db.collec`
 
 ## Filters & projection
-Filtering consists in selecting values in a collection based on specific keys/values.  
-A projection is a customization of a query's format by specifying which keys/values should be returned.  
+**Filtering** consists in selecting values in a collection based on specific keys/values.  
+A **projection** is a customization of a query's format by specifying which keys/values should be returned.  
 
 ### *find()* method
 Filtering & projection are made with the collection class method *find()*. 
@@ -25,18 +25,18 @@ The second one is another document with format `{"key":x}` used for projection, 
 More specific filtering can be made using operators:(https://docs.mongodb.com/manual/reference/operator/query/)
 Operator | Meaning | Example
 ----- | :-----: | :-----
-**\$lt, \$lte** | lower than | `"a" : {"$lt" : 10}`
-**\$gt, \$gte** | greater than | `"a" : {"$gt" : 10}`
-**\$ne** | not equal | `"a" : {"$ne" : 10}`
-**\$in, \$nin** | in, not in | `"a" : {"$in" : [10, 12, 15, 18]}`
-**\$or** | logical OR | `"a" : {“$or” : [{"$gt" : 10}, {“$lt” : 5}]}`
-**\$and** | logical AND | `"a" : {“$and” : [{"$lt" : 10}, {“$gt” : 5}]}`
-**\$not** | negation | `“a" : {“$not” : {"$lt" : 10}}`
-**\$exists** | tests if a key is in the doc | `“a” : {“$exists” : 1}`
-**\$size** | tests a list size (equality only) | `“a” : {“$size” : 5}`
+**\$lt, \$lte** | lower than | `"a" : {$lt : 10}`
+**\$gt, \$gte** | greater than | `"a" : {$gt : 10}`
+**\$ne** | not equal | `"a" : {$ne : 10}`
+**\$in, \$nin** | in, not in | `"a" : {$in : [10, 12, 15, 18]}`
+**\$or** | logical OR | `"a" : {$or : [{$gt : 10}, {$lt : 5}]}`
+**\$and** | logical AND | `"a" : {$and : [{$lt : 10}, {$gt : 5}]}`
+**\$not** | negation | `“a" : {$not : {$lt : 10}}`
+**\$exists** | tests if a key is in the doc | `“a” : {$exists : 1}`
+**\$size** | tests a list size (equality only) | `“a” : {$size : 5}`
 
 **NOTES**: 
-- logical operators do not perform strict filtering on **lists** e.g `“a” : {"$lt" : 10}` returns the corresponding example if there is **at least** one value in the list `a` smaller than 10. To return the example iff **all** values in `a` are smaller than 10 hence it should be used in association with `“a” : {"$not": {"$gt" : 10}}`
+- logical operators do not perform strict filtering on **lists** e.g `“a” : {$lt" : 10}` returns the corresponding example if there is **at least** one value in the list `a` smaller than 10. To return the example iff **all** values in `a` are smaller than 10 it should be used in association with `“a” : {$not: {$gt : 10}}`
 - when a field is a list, filtering each element of that list must be done with `$elemMatch` operator:  `"a" : {$elemMatch: {conditions}}` 
 - to focus on certain elements of a list based on their index:  e.g. to filter on the first element (index 0) of "a", `"a.0" : {conditions}`
 
@@ -57,18 +57,33 @@ This pipeline can contain several operators such as:
 
 Note that these operators are wrapped into documents which means they can be treated are variables (dictionaries in Python) thus can be named e.g. `varMatch = {$match: {}}`.
 
-### Sort
-```javascript
-{$sort : {"key":1}}
-```
-"1" for ascending order, "-1" for descending order with `key` as the sorting key name.
-
 ### Group
 ```javascript
 {$group : {"_id" : "$key", "total" : {$sum : 1}}}
 ```
 Must contain an aggregation key (here `_id`) and a field (key) as value (`"$key"`,  `key` as the field name) and an *artificial* key to which the aggregation function is associated e.g. `"total" : {$sum : 1}`.  
 Replace `"$key"` by `null` to perform no aggregation but apply an aggregation function.  
+
+### Sort
+```javascript
+{$sort : {"key" : 1}}
+```
+"1" for ascending order, "-1" for descending order with `key` as the sorting key name.
+
+### Sortbycount
+One usually wants to aggregate with `$group` based on a certain key, counting elements of each group then sorting based on counts.
+```javascript
+db.collec.aggregate([
+	{$group: {"_id" : "$key", "count": {$sum: 1}}},
+	{$sort: {"count" : 1}}
+])
+```
+This can be shortened using the `$sortByCount` operator:
+```javascript
+db.collec.aggregate([
+	{$sortByCount: "$key"}
+])
+``` 
 
 ### Unwind
 ```javascript
