@@ -1,9 +1,9 @@
 
-# noSQL
+# About noSQL
 
 Figures source: OpenClassrooms
 
-noSQL was designed to provide a solution to a drawback from SQL usage: **distributed processing**. noSQL features a different way of making queries and handles data storage as well. 
+noSQL was designed to provide a solution to a drawback from SQL usage: **distributed processing**. noSQL solutions feature a different way of making queries and handle files distribution as well. 
 
 ## noSQL families
 Depending on the usage, several families of noSQL solutions exist.
@@ -78,7 +78,7 @@ Elasticity designates the system's ability to adapt itself to the number of serv
 ### HDFS 
 Cf. [mapreduce.md](https://github.com/RomainChor/DataScience/blob/master/In_progress/mapreduce.md)
 
-HDFS gives a nice processing power as well as a robustness (thanks to all replicas).
+HDFS gives a nice processing power as well as robustness (thanks to replicas).
 
 ### Clustered index
 In this system, files are distributed in a tree-based network.  
@@ -92,3 +92,9 @@ Clustered index file system allows a structured and hierarchical data distributi
 
 ### Distributed hashing tables
 ![](https://user.oc-static.com/upload/2017/06/07/14968445278407_ShardingDHT.png)
+
+
+## MongoDB: a document-based noSQL solution
+MongoDB is a CP (Consistent-Partition tolerant) noSQL solution using clustered index files distribution.
+
+MongoDB uses "documents" to store data. More precisely, these documents are JSON-like. In MongoDB, a table is called a **collection**. Queries in MongoDB are made using JavaScript but a Python library (PyMongo) exists.
