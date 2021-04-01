@@ -3,7 +3,7 @@
 
 Figures source: OpenClassrooms
 
-noSQL was designed to provide a solution to a drawback from SQL usage: **distributed processing**. noSQL solutions feature a different way of making queries and handle files distribution as well. 
+noSQL was designed to provide a solution to a drawback from SQL usage: **distributed processing**. noSQL solution feature a different way of making queries and handle files distribution as well. 
 
 ## noSQL families
 Depending on the usage, several families of noSQL solutions exist.
@@ -98,3 +98,6 @@ Clustered index file system allows a structured and hierarchical data distributi
 MongoDB is a CP (Consistent-Partition tolerant) noSQL solution using clustered index files distribution.
 
 MongoDB uses "documents" to store data. More precisely, these documents are JSON-like. In MongoDB, a table is called a **collection**. Queries in MongoDB are made using JavaScript but a Python library (PyMongo) exists.
+
+## ElasticSearch: a columns-based noSQL solution
+ElasticSearch is a noSQL solution based on a browser engine called **Lucene**. It allows highly customized queries and is particularly efficient for documents containing text (strings). Indeed, ElasticSearch uses documents (JSON like) but is columns-based. 
