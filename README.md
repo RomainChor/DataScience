@@ -12,7 +12,7 @@ You will find some work produced during my degree and helpers I actually use.
 It is not "perfect" and under continuous modifications.  
 Please feel free to give your opinion so I can improve it :)  
 
-**AI_for_medicine folder**: lecture notes about a Coursera's MOOC on Machine learning for medical diagnosis, prognosis and treatment.  
+**AI_for_medicine folder**: lecture notes about a Coursera's MOOC on Machine learning for medical diagnosis, prognosis and treatment. (February 2021)  
 
 **Cassava_classification_challenge folder**: notebooks used for Kaggle "Cassava leaf disease classification" challenge to which I contributed from December 2020 to February 2021. [Link](https://www.kaggle.com/c/cassava-leaf-disease-classification)  
 
@@ -20,5 +20,5 @@ Please feel free to give your opinion so I can improve it :)
 
 **Pegasos folder**: A work around Pegasos and online convex optimization algorithms. Theoretical results, implemetation and simulations on the famous MNIST handwritten digits dataset. (March 2020)  
 
-**no_SQL folder**: lecture notes about several courses on noSQL databases and mongoDB cheatsheets. 
+**no_SQL folder**: lecture notes about several courses on noSQL databases and mongoDB cheatsheets. (March 2021)  
 
