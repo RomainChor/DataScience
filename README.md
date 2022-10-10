@@ -1,16 +1,17 @@
 # Welcome !
 
 ## About me
-I recently graduated from a Master's degree in Statistics & Data Science at Sorbonne University (Paris).  
-I am particularly interested in applications of Machine learning for AI in various fields.  
+Currently preparing a PhD thesis @ Huawei Technologies France & Laboratoire d'informatique Gaspard Monge (LIGM). I am interested in distributed statistical learning, exploring information theoretic and compressibility approaches, through study of theoretical limits & algorithms. More generally, I am eager to learn about exciting scientific topics in various fields.  
 You can know more about me here: [LinkedIn](https://www.linkedin.com/in/romain-chor/)
 
 ## What you will find here
-You will find some work produced during my degree and helpers I actually use.  
+You will find some work produced along the recent years and helpers I actually use.  
 
 **toolbox.py**: (helper) Python functions for data analysis and inference.    
 It is not "perfect" and under continuous modifications.  
 Please feel free to give your opinion so I can improve it :)  
+
+**Generalization_NeurIPS2022 folder**: code for simulations done for a joint work with Sefidgaran M. & Zaidi A. that resulted in an accepted paper @ NeurIPS2022. The work focuses on theoretical guarantees for the generalization error of distributed learning algorithms and shows some improvement from previous works. (June 2022)  
 
 **AI_for_medicine folder**: lecture notes about a Coursera's MOOC on Machine learning for medical diagnosis, prognosis and treatment. (February 2021)  
 
