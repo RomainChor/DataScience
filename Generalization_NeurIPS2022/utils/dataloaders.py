@@ -74,51 +74,50 @@ def load_binary_data(class1, class2, path="", proj_dim=0, gamma=1.0):
 
 def make_classification_data(params, loaded_data=None):
     data = {}                                           
-    if params["name"] == "mnist":
+    if params.name == "mnist":
         if loaded_data is not None:
             data = deepcopy(loaded_data)
             
-        if params["N"] <= data["X"].shape[0]: # Sampling
+        if params.N <= data["X"].shape[0]: # Sampling
             data["X"], _, data["y"], _ = train_test_split(
                 data["X"], 
                 data["y"], 
-                train_size=params["N"], 
-                random_state=params["seed"],
+                train_size=params.N, 
+                random_state=params.seed,
                 stratify=data["y"]
             )
         else:
             print("N is greater than the dataset size. The whole dataset is loaded.")
 
-
-        if params["compare_hom_het"]:
+        if params.compare_hom_het:
             d = data["X"].shape[1]
-            if params["iid"]:
-                data["X"][:params["N"]//4, :] += np.random.normal(scale=params["noise_std"], size=(params["N"]//4, d))
-                data["X"][3*params["N"]//4:, :] += np.random.normal(scale=params["noise_std"], size=(params["N"]//4, d))
+            if params.iid:
+                data["X"][:params.N//4, :] += np.random.normal(scale=params.noise_std, size=(params.N//4, d))
+                data["X"][3*params.N//4:, :] += np.random.normal(scale=params.noise_std, size=(params.N//4, d))
             else:
-                data["X"][:params["N"]//2, :] += np.random.normal(scale=params["noise_std"], size=(params["N"]//2, d))
+                data["X"][:params.N//2, :] += np.random.normal(scale=params.noise_std, size=(params.N//2, d))
             N_test = data["X_test"].shape[0]
             idxs = np.random.permutation(N_test)[:N_test//2]
-            data["X_test"][idxs, :] += np.random.normal(scale=params["noise_std"], size=(N_test//2, d))
+            data["X_test"][idxs, :] += np.random.normal(scale=params.noise_std, size=(N_test//2, d))
 
-    elif params["name"] == "balls":    
+    elif params.name == "balls":    
         s = 1 
-        if params["iid"]:
-            centers = np.zeros((params["N"], params["dim"]))
-            centers[:, 0] = s*(2*np.random.binomial(n=1, p=0.5, size=params["N"]) - 1)
-            data["X"], data["y"] = generate_ball_data(params["N"], params["dim"], radius=params["radius"])
+        if params.iid:
+            centers = np.zeros((params.N, params.dim))
+            centers[:, 0] = s*(2*np.random.binomial(n=1, p=0.5, size=params.N) - 1)
+            data["X"], data["y"] = generate_ball_data(params.N, params.dim, radius=params.radius)
             data["X"] += centers
         else:
-            centers = np.zeros((params["N"], params["dim"]))
-            centers[:params["N"]//2, 0] = -s
-            centers[params["N"]//2:, 0] = s
-            data["X"], data["y"] = generate_ball_data(params["N"], params["dim"], radius=params["radius"])
+            centers = np.zeros((params.N, params.dim))
+            centers[:params.N//2, 0] = -s
+            centers[params.N//2:, 0] = s
+            data["X"], data["y"] = generate_ball_data(params.N, params.dim, radius=params.radius)
             data["X"] += centers
 
         N_test = 500
         centers = np.zeros((N_test, params["dim"]))
         centers[:, 0] = s*(2*np.random.binomial(n=1, p=0.5, size=N_test) - 1)
-        data["X_test"], data["y_test"] = generate_ball_data(N_test, params["dim"], radius=params["radius"])
+        data["X_test"], data["y_test"] = generate_ball_data(N_test, params.dim, radius=params.radius)
         data["X_test"] += centers
 
     return data
