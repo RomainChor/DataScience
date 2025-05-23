@@ -1,16 +1,12 @@
-#                            Code for NeurIPS 2022 paper                     #
-#  Rate-Distortion Theoretic Bounds on Generalization Error for Distributed Learning   #
-Authors: M. Sefidgaran, R. Chor, A. Zaidi  
-Available at [arxiv.org/abs/2206.02604](https://arxiv.org/abs/2206.02604).
-
-This archive contains code and instructions for reproducing experiments in the paper titled "Rate-Distortion Theoretic Bounds on Generalization Error for Distributed Learning" presented at the NeurIPS 2022 conference, which took place in New Orleans, Louisiana (USA) from Monday November 28th through Friday December 9th.  
+#  Rate-Distortion Theoretic Bounds on Generalization Error for Distributed Learning  
+This archive contains code and instructions for reproducing experiments in the NeurIPS2022 paper titled "Rate-Distortion Theoretic Bounds on Generalization Error for Distributed Learning" by Milad Sefidgaran, Romain Chor and Abdellatif Zaidi. The paper is available [here](https://arxiv.org/abs/2206.02604).
 
 
-# Requirements 
-The code is tested with Python 3.6.7 on Linux. Please see requirements.txt.
+## Requirements 
+The code is tested with Python 3.12 on Windows 11/Ubuntu. Please see requirements.txt.
 
 
-# Code structure 
+## Code structure 
 **utils/**: contains utility files.
 
 **run_experiments.py**: main code for running experiments.
@@ -29,7 +25,7 @@ Arguments:
 - `--MC`: Number of runs (Monte-Carlo simulations), type: int
 
 
-# Running experiments 
+## Running experiments 
 Our implementation requires manually downloading MNIST data from e.g., [yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/).  
 Extract the files as per your convenience and make sure to modify the `--save_path` argument.  
 To reproduce the simulations that allowed us to produce Fig. 2 and 3 in the paper, run the following command:  
