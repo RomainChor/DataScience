@@ -1,11 +1,11 @@
 # Welcome !
 
 ## About me
-Currently preparing a PhD thesis at Huawei Technologies France & Laboratoire d'informatique Gaspard Monge (LIGM). I am interested in distributed statistical learning, exploring information theoretic and compressibility approaches, through study of theoretical limits & algorithms. More generally, I am eager to learn about exciting scientific topics in various fields.  
+Currently preparing a PhD at Huawei Paris Research Center & Laboratoire d'informatique Gaspard Monge (LIGM). I am interested in distributed statistical learning, exploring information theoretic and compressibility approaches, through study of theoretical limits & algorithms. More generally, I am eager to learn about exciting scientific topics in various fields.  
 
 ### News
 My recent joint work with Milad Sefidgaran, Adbellatif Zaidi and Yijun Wan, titled "Lessons from Generalization Error Analysis of Federated Learning: You May Communicate Less Often!" has been accepted at [ICML 2024](https://icml.cc/). (May 2024)  
-You can find the source code for reproducing experiments in this [repository](https://github.com/RomainChor/Generalization_FL_ICML2024).  
+You can find the source code for reproducing experiments in [this repository](https://github.com/RomainChor/Generalization_FL_ICML2024).  
 
 ### Links
 Mail: romain.chor@yahoo.fr  
