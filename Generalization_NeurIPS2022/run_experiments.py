@@ -1,4 +1,4 @@
-
+import warnings
 import time
 import argparse
 import numpy as np
@@ -8,16 +8,18 @@ from copy import deepcopy
 from utils.dataloaders import load_binary_data, make_classification_data
 from utils.models import federated_learning, centralized_learning
 
+warnings.filterwarnings("ignore")
+
 
 
 
 def args_parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--data_path", type=str)
+    parser.add_argument("--data_path", type=str, default="data/")
     parser.add_argument("--save_path", type=str, default="save/")
-    parser.add_argument("--name", type=str, default="balls", help="dataset name")
-    parser.add_argument("--comparison", type=str, default="n", choices=["rho", "n", "K"],
+    parser.add_argument("--name", type=str, default="mnist", help="dataset name")
+    parser.add_argument("--comparison", type=str, default="K", choices=["rho", "n", "K"],
                         help="to run comparison for different 'rho' or 'n'.")
     parser.add_argument("--K", type=int, default=2)
     parser.add_argument("--K_values", nargs="+", type=int, default=[2, 5, 10, 25, 50])
