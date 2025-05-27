@@ -265,8 +265,10 @@ def federated_learning(data, params, K=2, generator=None):
     for k in range(K):
         server.add_participant(Client(X_list[k], y_list[k], params))
 
-    for _ in range(params.rounds):
+    stream = tnrange(params.rounds)
+    for r in stream:
         server.run_round()
+        stream.set_description (f"Round {r+1} achieved.")
         
     return server
 
