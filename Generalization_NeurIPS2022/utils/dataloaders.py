@@ -130,38 +130,38 @@ def make_classification_data(params, loaded_data=None):
 
 
 def make_regression_data(params):
-    N_samples = params["N"]+params["N_test"]
-    if params["name"] == "default":
+    N_samples = params.N+params["N_test"]
+    if params.name == "default":
         X, y = make_regression(
             n_samples=N_samples, 
-            n_features=params["d"],
-            n_informative=params["d"],
+            n_features=params.dim,
+            n_informative=params.dim,
             bias=params["bias"],
-            noise=params["noise"],
+            noise=params.noise_std,
             shuffle=True,
-            random_state=params["seed"]
+            random_state=params.seed
         )
-    elif params["name"] == "friedman":
+    elif params.name == "friedman":
         X, y = make_friedman1(
             n_samples=N_samples,
-            n_features=params["d"],
-            noise=params["noise"],
-            random_state=params["seed"]
+            n_features=params.dim,
+            noise=params.noise_std,
+            random_state=params.seed
         )
-    elif params["name"] == "gaussian":
-        X = np.random.normal(mean, std, (N_samples, params["d"]))
-        W = np.random.normal(mean, std, d)
+    elif params.name == "gaussian":
+        X = np.random.normal(params.noise_mean, params.noise_std, (N_samples, params.dim))
+        W = np.random.normal(params.noise_mean, params.noise_std, params.dim)
         y = np.dot(X, W) 
-        if params["noise"] > 0:
-            y += params["noise"]*np.random.normal(0, 1.0, N_samples)
-    elif params["name"] == "california":
+        if params.noise_std > 0:
+            y += params.noise_std*np.random.normal(0, 1.0, N_samples)
+    elif params.name == "california":
         dataset = fetch_california_housing()
         if N_samples <= len(dataset.target):
             X, _, y, _ = train_test_split(
                 dataset.data, 
                 dataset.target, 
                 train_size=N_samples, 
-                random_state=params["seed"]
+                random_state=params.seed
             )
 #             idxs = np.random.randint(0, len(dataset.target), N_samples)
 #             X, y = dataset.data[idxs, :], dataset.target[idxs]
@@ -175,7 +175,7 @@ def make_regression_data(params):
         X, 
         y, 
         test_size=params["N_test"], 
-        random_state=params["seed"]
+        random_state=params.seed
     )
     
 #     y_test += np.random.normal(0, 1.0, params["N_test"])
