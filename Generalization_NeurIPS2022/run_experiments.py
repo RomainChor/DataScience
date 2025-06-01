@@ -27,11 +27,14 @@ def args_parser():
     parser.add_argument("--n_values", nargs="+", type=float, default=[100, 200, 400, 500, 700, 900, 1000])
     parser.add_argument("--noise_std", type=float, default=0.2,
                         help="standard deviation of the AWGN/Gaussian data")
+    parser.add_argument("--bias", type=float, default=0)
     parser.add_argument("--dim", type=int, default=100, help="dimension of synthetic data")
     parser.add_argument("--radius", type=float, default=1.5, help="radius of balls (synthetic data)")
     parser.add_argument("--rho_values", nargs="+", type=float, default=[1.0, 2.0, 3.0, 4.0, 5.0])
     parser.add_argument("--classes", nargs="+", type=int, default=[1,6],
                         help="MNIST classes")
+    parser.add_argument("--rescale", type=int, default=0, 
+                        help="whether to rescale the data")
     parser.add_argument("--compare_hom_het", type=int, default=0, 
                         help="whether to compare the homogeneous and heterogeneous setups (NIPS25 paper)")
     

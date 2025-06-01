@@ -136,7 +136,7 @@ def make_regression_data(params):
             n_samples=N_samples, 
             n_features=params.dim,
             n_informative=params.dim,
-            bias=params["bias"],
+            bias=params.bias,
             noise=params.noise_std,
             shuffle=True,
             random_state=params.seed
@@ -174,13 +174,13 @@ def make_regression_data(params):
     X, X_test, y, y_test = train_test_split(
         X, 
         y, 
-        test_size=params["N_test"], 
+        test_size=params.N//10, 
         random_state=params.seed
     )
     
 #     y_test += np.random.normal(0, 1.0, params["N_test"])
     
-    if params["scale"]:
+    if params.rescale:
         scaler = StandardScaler()
         X = scaler.fit_transform(X)
         X_test = scaler.transform(X_test)
