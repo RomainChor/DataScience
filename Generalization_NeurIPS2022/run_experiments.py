@@ -27,6 +27,7 @@ def args_parser():
     parser.add_argument("--n_values", nargs="+", type=float, default=[100, 200, 400, 500, 700, 900, 1000])
     parser.add_argument("--noise_std", type=float, default=0.2,
                         help="standard deviation of the AWGN/Gaussian data")
+    parser.add_argument("--noise_mean", type=float, default=0)
     parser.add_argument("--bias", type=float, default=0)
     parser.add_argument("--dim", type=int, default=100, help="dimension of synthetic data")
     parser.add_argument("--radius", type=float, default=1.5, help="radius of balls (synthetic data)")

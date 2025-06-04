@@ -130,7 +130,7 @@ def make_classification_data(params, loaded_data=None):
 
 
 def make_regression_data(params):
-    N_samples = params.N+params["N_test"]
+    N_samples = params.N + params.N*2
     if params.name == "default":
         X, y = make_regression(
             n_samples=N_samples, 
@@ -174,7 +174,7 @@ def make_regression_data(params):
     X, X_test, y, y_test = train_test_split(
         X, 
         y, 
-        test_size=params.N//10, 
+        test_size=params.N*2, 
         random_state=params.seed
     )
     
